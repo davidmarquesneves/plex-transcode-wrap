@@ -14,7 +14,7 @@ done
 declare -a NEW_ARGS
 skip_next=0
 
-# Troca o valor de PrimaryColour (se existir) por &H0000FFFF
+# Change the value of PrimaryColour (se existir) for &H0000FFFF
 SED_CMD='s/(PrimaryColour\\*=)&H[a-fA-F0-9]+/\1\&H0000FFFF/g'
 
 for arg in "$@"; do
@@ -32,7 +32,7 @@ for arg in "$@"; do
     esac
   fi
 
-  # Só mexe no argumento que contém inlineass=
+  # It only changes the argument that contains inlineass=
   if [[ "$arg" == *"inlineass="* ]]; then
     arg=$(printf "%s" "$arg" | sed -E "$SED_CMD")
   fi
@@ -42,8 +42,8 @@ done
 
 {
   echo "===== $(date -Is) ====="
-  printf "ANTES : %q " "$REAL" "$@"; echo
-  printf "DEPOIS: %q " "$REAL" "${NEW_ARGS[@]}"; echo
+  printf "Before : %q " "$REAL" "$@"; echo
+  printf "After: %q " "$REAL" "${NEW_ARGS[@]}"; echo
 } >> "$LOG" 2>/dev/null || true
 
 exec "$REAL" "${NEW_ARGS[@]}"
