@@ -5,5 +5,9 @@ Currently, the script only changes the color of burned-out subtitles via forced 
 It was initially created in a scenario with a native Plex server running Debian (currently version 13) and an Nvidia GTX 1660 Super (Turing) GPU.
 
 ## Disclaimer
-This software is provided "as is", without any express or implied warranty. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software. Use at your own risk.
+This software is provided "as is", without any express or implied warranty. 
+
+In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software. 
+
+Use at your own risk!
 
