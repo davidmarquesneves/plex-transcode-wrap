@@ -1,0 +1,51 @@
+#!/bin/bash
+
+REAL="/usr/lib/plexmediaserver/Plex Transcoder.real"
+LOG="/tmp/plex-transcoder-wrap.log"
+
+IS_AV1=0
+for arg in "$@"; do
+  if [[ "$arg" == "libdav1d" || "$arg" == *"codec:0"*av1* || "$arg" == *" -c:v "*av1* ]]; then
+    IS_AV1=1
+    break
+  fi
+done
+
+declare -a NEW_ARGS
+skip_next=0
+
+# Troca o valor de PrimaryColour (se existir) por &H0000FFFF
+SED_CMD='s/(PrimaryColour\\*=)&H[a-fA-F0-9]+/\1\&H0000FFFF/g'
+
+for arg in "$@"; do
+  if [[ "$skip_next" -eq 1 ]]; then
+    skip_next=0
+    continue
+  fi
+
+  if [[ "$IS_AV1" -eq 1 ]]; then
+    case "$arg" in
+      -init_hw_device|-filter_hw_device|-hwaccel|-hwaccel_output_format)
+        skip_next=1
+        continue
+        ;;
+    esac
+  fi
+
+  # Só mexe no argumento que contém inlineass=
+  if [[ "$arg" == *"inlineass="* ]]; then
+    arg=$(printf "%s" "$arg" | sed -E "$SED_CMD")
+  fi
+
+  NEW_ARGS+=("$arg")
+done
+
+{
+  echo "===== $(date -Is) ====="
+  printf "ANTES : %q " "$REAL" "$@"; echo
+  printf "DEPOIS: %q " "$REAL" "${NEW_ARGS[@]}"; echo
+} >> "$LOG" 2>/dev/null || true
+
+exec "$REAL" "${NEW_ARGS[@]}"
+
+
