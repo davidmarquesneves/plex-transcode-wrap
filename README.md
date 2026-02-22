@@ -1,0 +1,1 @@
+This script was created to redirect access to the "Plex Transcoder" executable in /usr/lib/plexmediaserver by renaming the executable to "Plex Transcoder" to "Plex Transcoder.real" and creating a bash script called "Plex Transcoder".
